@@ -33,11 +33,10 @@ jobs:
           docker push ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME_BACK }}/${{ vars.GOOGLE_MYAPP }}:latest
 
   staging:
-    name: Staging deployment
+    name: Staging
     needs: build
     runs-on: ubuntu-latest
     
-
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -58,23 +57,9 @@ jobs:
       - name: Test Homolog
         run: 'curl "${{ steps.staging-deploy.outputs.url }}"'
 
-  prodApproval:
-    name: Production Approval
-    needs: staging
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: trstringer/manual-approval@v1
-        with: 
-          secret: ${{ github.TOKEN }}
-          approvers: samukasantos,igooruh,rcjeferson
-          minimum-approvals: 1
-          issue-title: "Deploying to Production from Staging"
-          exclude-workflow-initiator-as-approver: false
-
   production:
-    name: Production Deployment
-    needs: prodApproval
+    name: Production
+    needs: staging
     runs-on: ubuntu-latest
 
     steps:
