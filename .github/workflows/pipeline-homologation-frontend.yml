@@ -27,6 +27,11 @@ jobs:
       #   run: |
       #     npm run test
 
+      - name: Docker Login
+        run: |
+          echo '${{ secrets.GOOGLE_CREDENTIALS }}' > key.json
+          cat key.json | docker login -u _json_key --password-stdin '${{ vars.GOOGLE_ARTIFACT }}'
+
       - name: Build and Push Image
         run: |
           cd frontend
