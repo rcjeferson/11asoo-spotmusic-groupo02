@@ -68,7 +68,7 @@ jobs:
         with: 
           secret: ${{ github.TOKEN }}
           approvers: samukasantos,igooruh,rcjeferson
-          mininum-approvals: 1
+          minimum-approvals: 1
           issue-title: "Deploying to Production from Staging"
           exclude-workflow-initiator-as-approver: false
 
