@@ -12,10 +12,6 @@ resource "google_sql_database_instance" "spotmusic" {
     disk_size       = "10"
     disk_autoresize = true
     disk_type       = "PD_SSD"
-
-    ip_configuration {
-      private_network = "projects/${var.GOOGLE_PROJECT_ID}/global/networks/default"
-    }
   }
 }
 
