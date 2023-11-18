@@ -3,8 +3,7 @@ name: Homologation Spotmusic Frontend
 on:
   push:
     paths:
-      - "frontend/**"
-  pull_request:
+      - 'frontend/**'
     branches: [ main ]
 
 jobs:
