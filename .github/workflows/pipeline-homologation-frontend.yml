@@ -1,0 +1,58 @@
+name: Homologation Spotmusic Frontend
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  Build:
+    run-os: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@main
+        with:
+          node-version: '18.15.0-alpine3.17'
+      
+      - name: Install dependencies Node
+        run: |
+          npm install
+
+      - name: Unit test
+        run: |
+          npm run test
+
+      - name: Build and Push Image
+        run: |
+          docker build -t ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME_FRONT }}/${{ vars.GOOGLE_MYAPP }}:latest .
+          docker push ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME_FRONT }}/${{ vars.GOOGLE_MYAPP }}:latest
+
+  Deploy:
+    needs: Build
+    run-os: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Auth GPC
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+      - name: Cloud Run Deploy
+        id: deploy
+        run: |
+          gcloud run deploy ${{ vars.GOOGLE_MYAPP }} \
+            --quiet \
+            --region  ${{ vars.GOOGLE_REGION }} \
+            --image ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME_FRONT }}/${{ vars.GOOGLE_MYAPP }}:latest \
+            --platform managed \
+            --allow-unauthenticated \
+            --project ${{ vars.GOOGLE_PROJECT_ID }} \
+            --format json
