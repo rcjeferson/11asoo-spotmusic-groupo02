@@ -34,7 +34,6 @@ jobs:
 
   stagingDeployment:
     name: Staging deployment
-    needs: staging
     runs-on: ubuntu-latest
 
     steps:
@@ -73,7 +72,7 @@ jobs:
 
   prodDeployment:
     name: Production Deployment
-    needs: ProdApproval
+    needs: prodApproval
     runs-on: ubuntu-latest
 
     steps:
