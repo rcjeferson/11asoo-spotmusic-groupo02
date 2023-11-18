@@ -21,7 +21,8 @@ jobs:
 
       - name: Install dependencies Node
         run: |
-          npm install
+          npm cache clean -f
+          npm i
 
       # - name: Unit test
       #   run: |
