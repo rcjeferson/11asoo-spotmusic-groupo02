@@ -34,7 +34,9 @@ jobs:
 
   staging:
     name: Staging deployment
+    needs: build
     runs-on: ubuntu-latest
+    
 
     steps:
       - name: Checkout Repo
