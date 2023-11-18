@@ -3,7 +3,7 @@ FROM python:3
 
 # Adicionando um usuário de sistema
 RUN adduser --system --home /home/spotmusic  spotmusic
-USER myapp
+USER spotmusic
 
 # Definindo o diretório onde a aplicação será armazenada
 WORKDIR /home/spotmusic
