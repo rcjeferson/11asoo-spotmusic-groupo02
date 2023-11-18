@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'frontend/**'
-    branches: [ feat/pipeline ]
+    branches: [main]
 
 jobs:
   build:
