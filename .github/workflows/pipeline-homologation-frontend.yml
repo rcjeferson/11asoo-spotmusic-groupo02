@@ -27,6 +27,10 @@ jobs:
       #   run: |
       #     npm run test
 
+      - name: build Frontend
+        run: |
+          npm run build
+
       - name: Build and Push Image
         run: |
           docker build -t ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME_FRONT }}/${{ vars.GOOGLE_MYAPP }}:latest .
