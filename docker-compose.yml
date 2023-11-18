@@ -3,9 +3,10 @@ version: '3.1'
 services:
 
   backend:
-    image: "backend"
+    build:
+      context: ./backend
     ports:
-      - "5000:8080"
+      - "8080:8080"
     depends_on:
       - "db"
     environment:
@@ -16,9 +17,10 @@ services:
         DB_LOCAL_HOST: db
 
   frontend:
-    image: "frontend"
+    build:
+      context: ./frontend
     ports:
-      - "3000:8080"
+      - "80:80"
         
   db:
     image: "mysql:8.0"
@@ -32,4 +34,4 @@ services:
     ports:
       - 3306:3306
     volumes:
-        - ./playlist-infra/Playlist.sql:/data/application/init.sql
+        - ./playlist.sql:/data/application/init.sql
