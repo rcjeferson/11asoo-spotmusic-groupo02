@@ -34,6 +34,6 @@ jobs:
       #     coverage report -m
       #     coverage xml -i
       
-      # - name: Build Image
-      #   run: | 
-      #     docker build -t ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME }}/${{ vars.GOOGLE_MYAPP }}:latest .
+      - name: Build Image
+        run: | 
+          docker build -t ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME_BACKEND }}/${{ vars.GOOGLE_MYAPP }}:latest .
